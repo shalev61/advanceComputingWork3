@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "DisplayTravel";
+}
+
+<style>
+    .canvas {
+        background-image: url("/Content/export-map-share.png");
+        background-size: 100% 100%;
+    }
+</style>
+
+
+<canvas class="canvas" id="canvas"></canvas>
+
+<script>
+    // Global variables - contain current and recent coordinates
+    var oldLon, newLon, oldLat, newLat;
+
+    initScreen();
+    drawPoint();
+    setInterval(myTimer, 1000 * @ViewBag.Frequency);
+
+    /*
+     * Gets a new updated coordinate.
+     * Draws a line connecting current and recent coordinate.
+     */
+    function myTimer() {
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+
+        // Gets new coordinate using ajax POST
+        $.post("@(Url.Action("GetStringCoordinate", "Main"))", { ip: "@ViewBag.Ip", port: @ViewBag.Port }).done(function (data) {
+            // Process data
+            var i = data.indexOf(" "), l = data.length;
+            newLon = normalizeLon(parseFloat(data.substring(0, i)));
+            newLat = normalizeLat(parseFloat(data.substring(i + 1, l)));
+
+            // Draw a line
+            drawLine(oldLon, oldLat, newLon, newLat);
+
+            // Update recent coordinate
+            oldLon = newLon;
+            oldLat = newLat;
+        });
+    }
+
+    /*
+     * Initialize the canvas (size and position).
+     */
+    function initScreen() {
+        var c = document.getElementById("canvas");
+
+        // Setting canvas size
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+
+        // Setting canvas position
+        c.style.left = "0px";
+        c.style.top = "0px";
+        c.style.position = "absolute";
+    }
+
+    /*
+     * Normalize longitude according to canvas size.
+     */
+    function normalizeLon (value) {
+        return (value + 180) * (window.innerWidth / 360);
+    }
+
+    /*
+     * Normalize latitude according to canvas size.
+     */
+    function normalizeLat(value) {
+        return (value + 90) * (window.innerHeight / 180);
+    }
+
+    /*
+     * Gets a new updated coordinate.
+     * Draws a point showing current coordinate.
+     */
+    function drawPoint() {
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+
+        // Gets new coordinate using ajax POST
+        $.post("@(Url.Action("GetStringCoordinate", "Main"))", { ip: "@ViewBag.Ip", port: @ViewBag.Port }).done(function (data) {
+            // Process data
+            var i = data.indexOf(" "), l = data.length;
+            var lon = normalizeLon(parseFloat(data.substring(0, i)));
+            var lat = normalizeLat(parseFloat(data.substring(i + 1, l)));
+
+            // Drawing black-red point on canvas
+            // Big black dot
+            ctx.beginPath();
+            ctx.arc(lon, lat, 12, 0, 2 * Math.PI);
+            ctx.fillStyle = "black";
+            ctx.fill();
+
+            // Small red dot
+            ctx.beginPath();
+            ctx.arc(lon, lat, 9, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+
+            // Update recent coordinate
+            oldLon = lon;
+            oldLat = lat;
+            newLon = lon;
+            newLat = lat;
+        });
+    }
+
+    /*
+     * Draws a line between 2 points on canvas.
+     */
+    function drawLine(x1, y1, x2, y2) {
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+
+        // Draws a red line
+        ctx.strokeStyle = "red";
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+
+</script>

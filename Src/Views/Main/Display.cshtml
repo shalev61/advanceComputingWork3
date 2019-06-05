@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Display";
+}
+
+<style>
+    .canvas {
+        background-image: url("/Content/export-map-share.png");
+        background-size: 100% 100%;
+    }
+</style>
+
+<canvas class="canvas" id="canvas"></canvas>
+
+<script>
+    // Taking coordinate
+    var lon = @ViewBag.Coordinate.Longitude;
+    var lat = @ViewBag.Coordinate.Latitude;
+
+    var c = document.getElementById("canvas");
+
+    // Setting canvas size
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+
+    // Setting canvas position
+    c.style.left = "0px";
+    c.style.top = "0px";
+    c.style.position = "absolute";
+
+    // Normalizing coordinate according to the screen
+    lon = (lon + 180) * (window.innerWidth / 360);
+    lat = (lat + 90) * (window.innerHeight / 180);
+
+    var ctx = c.getContext("2d");
+
+    // Drawing black-red point on canvas
+    // Big black dot
+    ctx.beginPath();
+    ctx.arc(lon, lat, 12, 0, 2 * Math.PI);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    // Small red dot
+    ctx.beginPath();
+    ctx.arc(lon, lat, 9, 0, 2 * Math.PI);
+    ctx.fillStyle = "red";
+    ctx.fill();
+</script>

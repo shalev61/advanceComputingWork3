@@ -1,0 +1,7 @@
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\bin\Debug\Excercise_1.exe.config
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\bin\Debug\Excercise_1.exe
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\bin\Debug\Excercise_1.pdb
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\obj\Debug\Excercise_1.csprojAssemblyReference.cache
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\obj\Debug\Excercise_1.csproj.CoreCompileInputs.cache
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\obj\Debug\Excercise_1.exe
+C:\Users\ShalevG\Source\Repos\Ex1-intro-of-c-sharp-2019\Excercise_1\Excercise_1\obj\Debug\Excercise_1.pdb
